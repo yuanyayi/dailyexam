@@ -1,0 +1,119 @@
+<!DOCTYPE html/>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+  <title>一日一练</title>
+  <link rel="stylesheet" type="text/css" href="css/common.css" />
+  <link rel="stylesheet/less" type="text/css" href="css/index1.less" />
+  <script type="text/javascript" src="js/jquery.min.js"></script>
+  <script type="text/javascript" src="js/vue.min.js"></script>
+  <script type="text/javascript" src="js/less.min.js"></script>
+</head>
+
+<body>
+  <div id="app" style="display: none;">
+    <!-- 测试和排名的头部： -->
+    <header v-if="page!=='answer'" class="text">
+      <div class="content">
+        <div class="img center">
+          <img class="dpr2" src="img/headimg@2x.png">
+          <img class="dpr3" src="img/headimg@3x.png">
+          <div class="subtitle"></div>
+        </div>
+        <!-- 用户个人的排名情况 -->
+        <div v-if="page==='rank'" class="row cf ranktitle">
+          <span class="label">{{userInfo.rank | rankfilter}}</span><span class="portrait">
+            <img :src="userInfo.user.image_url"></span><span>{{userInfo.user.nickname | ifisphonenum}}</span>
+          <span class="fr right" style="position: relative; top: -5px;">
+            <span class="bold">对<i>{{userInfo.right_num | is_right_num}}</i>题</span>
+          <br/>
+          <span>{{userInfo.use_time | timefilter}}</span>
+          </span>
+        </div>
+      </div>
+      <!-- 日历 -->
+      <div v-if="page==='rank'" class="calendar">
+        <img class="dpr2" src="img/calendarimg@2x.png">
+        <img class="dpr3" src="img/calendarimg@3x.png">
+        <h4 id="m"><span>{{month}}</span></h4>
+        <h5 id="d"><span>{{day}}</span></h5>
+        <div id="gototest" @click="getQuestions()"><span v-if="isNaN(userInfo.rank)">开练！</span><span v-else>今天做过了，查看解析</span></div>
+      </div>
+      <!-- 排名总数情况 -->
+      <div v-if="page==='rank'" class="total_rank tcenter">
+        <img src="img/shape.png">
+        <div class="con">
+          <div class="gocenter">
+            <p>已有<span>{{total_user}}</span>人参与</p>
+            <p v-if="!parseInt(userInfo.rank) || parseInt(userInfo.rank)<=0">快来参与吧</p>
+            <p v-else>您排名位于<span>{{userInfo.rank}}</span>，击败了<span>{{parseInt((total_user-userInfo.rank)/total_user*100)}}%</span>人</p>
+          </div>
+        </div>
+      </div>
+    </header>
+    <!-- 解析的头部 -->
+    <header v-if="page==='answer' && done==1" style="margin: 0;">
+      <div class="center" style="position: relative;">
+        <img class="dpr2" src="img/result@2x.png">
+        <img class="dpr3" src="img/result@3x.png">
+        <div style="position: absolute; top: 55%; left: 48.5%; width: 53%; font-size: 3.8em;">{{userPoint.toString().slice(0,1)}}<span style="display: inline-block;width: 28%;"></span>{{userPoint.toString().slice(1,2)}}</div>
+      </div>
+    </header>
+    <div v-else-if="page==='answer'" style="height: 10px;"></div>
+    <!-- 题目 -->
+    <div v-if="page==='test'">
+      <ul class="questionlist">
+        <!-- question -->
+        <my-question v-for="(qItem,key,index) in questions" :key="qItem.id" :q-item="qItem" :page="page" :index="key"></my-question>
+      </ul>
+      <!-- 题目结束 -->
+      <footer>
+        <div id="submit" @click="postAnswer"></div>
+      </footer>
+    </div>
+    <!-- 排名情况 -->
+    <ul v-if="page==='rank'" class="prl20 rank">
+      <my-rankcard v-for="(value, key) in rankList" :key="key" :index="key" :item="value"></my-rankcard>
+    </ul>
+    <!-- 解析 -->
+    <div v-if="page==='answer'" class="answerpage">
+      <!-- 题号区 -->
+      <ul id="an-index-list" class="border bgwhite tcenter">
+        <li v-for="(value, key) in questions">
+          <a :class="{bgred: !(value.myAnswer.toString()===value.correctIndexeList.toString()), border:true, circle:true, item:true}" :href="'#t'+key">
+            {{key+1}}</a>
+        </li>
+      </ul>
+      <!-- 转至排名-按钮 -->
+      <div class="center tcenter" style="margin-top:14px; margin-bottom: 12px;" @click="goToPage('rank')">
+        <img class="dpr2" src="img/answerbtn@2x.png" style="width: 124px;margin: auto">
+        <img class="dpr3" src="img/answerbtn@3x.png" style="width: 124px;margin: auto">
+      </div>
+      <ul v-if="page==='answer'" class="answer">
+        <!-- question -->
+        <my-question v-for="(qItem,key,index) in questions" :key="qItem.id" :q-item="qItem" :page="page" :index="key"></my-question>
+      </ul>
+    </div>
+    <!-- 遮罩层 -->
+    <!--     <div class="mask">
+      <div class="content">
+        <div id="login" class="center">
+          <div class="title">
+            <img class="dpr2" src="img/login@2x.png">
+            <img class="dpr3" src="img/login@3x.png">
+          </div>
+          <form class="center">
+            <input type="text" name="username" placeholder="请输入您在必胜公考app注册手机号">
+            <input type="text" name="username" placeholder="班级暗号">
+          </form>
+          <div class="submit" @click="hidemask"></div>
+        </div>
+      </div>
+    </div> -->
+  </div>
+</body>
+<script type="text/javascript" src="js/index.js"></script>
+
+</html>

@@ -1,0 +1,130 @@
+/*CSS Reset*/
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html, body {
+  position: relative;
+}
+body {
+  font-family: PingFangSC-Regular, Microsoft YaHei;
+  font-size: 14px;
+  line-height: 20px;
+  max-width: 600px;
+}
+h1, h2, h3, h4, h5, h6 {
+  font-weight: normal;
+  margin: 0;
+  font-size: 14px;
+  line-height: 20px;
+}
+ol,ul,dl,li,dt,dd {
+  list-style: none;
+}
+a {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+i {
+  font-style: normal;
+}
+img {
+  width: 100%;
+}
+img.oneLinePicClass {
+    width: auto;
+}
+p {
+  font-size: 14px;
+  line-height: 17px;
+}
+input {
+  display: block;
+  width: 100%;
+  height: 40px;
+  line-height: 20px;
+  border: none;
+  font-size: 14px;
+  padding: 10px;
+}
+button {
+  height: 40px;
+  line-height: 40px;
+}
+hr {
+  background: #e5e5e5;
+  height: 1px;
+  border: none;
+  margin-bottom: 10px;
+}
+.fixed {
+  position: fixed;
+}
+.center {
+  display: block;
+  margin: auto;
+}
+.tcenter {
+  text-align: center;
+}
+.abcenter {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+.mask {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  margin: auto;
+  top: 0; bottom: 0; left: 0; right: 0;
+  background-color: rgba(0,0,0,.5);
+  z-index: 99;
+}
+.white {
+  background-color: rgba(255,255,255,.5) !important;
+}
+.unable {
+  border-color: #e5e5e5 !important;
+  color: #ccc !important;
+}
+.fl {
+  float: left;
+}
+.fr {
+  float: right;
+}
+.cf.pfl>*{
+  float: left;
+}
+.cf.pfr>*{
+  float: right;
+}
+.cf:after {
+  content: ".";
+  display: block;
+  height: 0;
+  visibility: hidden;
+  clear: both;
+}
+.pointer {cursor: pointer;}
+.small {
+  font-size: 12px;
+}
+.ta-r {
+  text-align: right;
+}
+.ol {
+  display: inline-block;
+}
+.bgwhite {
+  background-color: #fff;
+}
+.circle {
+  border-radius: 50%;
+}
